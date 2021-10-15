@@ -10,15 +10,19 @@ module.exports = function (Homework) {
   };
 
   return async (array, fn, initialValue, cb) => {
-    const length = await lengthPromise(array);
-    let result = initialValue;
-    let currentValue;
+    try {
+      const length = await lengthPromise(array);
+      let result = initialValue;
+      let currentValue;
 
-    for (let i = 0; await lessPromise(i, length); i = await addPromise(i, 1)) {
-      currentValue = await getPromise(array, i);
-      result = await reducerPromise(result, currentValue, i, array, fn);
+      for (let i = 0; await lessPromise(i, length); i = await addPromise(i, 1)) {
+        currentValue = await getPromise(array, i);
+        result = await reducerPromise(result, currentValue, i, array, fn);
+      }
+
+      cb(result);
+    } catch (e) {
+      console.log(e);
     }
-
-    cb(result);
   };
 };
