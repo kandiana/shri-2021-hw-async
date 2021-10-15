@@ -9,7 +9,13 @@
     "sourceType": "module"
   },
   "rules": {
+    "no-await-in-loop": "off",
+    "object-curly-newline": "off",
+    "no-undef": "warn",
     "func-names": "warn",
-    "no-new-object": "warn"
+    "no-underscore-dangle": "warn",
+    "no-param-reassign": "warn",
+    "no-shadow": "warn",
+    "implicit-arrow-linebreak": "warn"
   }
 }
