@@ -9,6 +9,7 @@
     "sourceType": "module"
   },
   "rules": {
-    "func-names": "warn"
+    "func-names": "warn",
+    "no-new-object": "warn"
   }
 }
