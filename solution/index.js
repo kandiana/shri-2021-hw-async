@@ -1,12 +1,54 @@
 module.exports = function (Homework) {
-  const getPromise = (asyncArray, i) => new Promise((resolve) => asyncArray.get(i, resolve));
-  const lengthPromise = (asyncArray) => new Promise((resolve) => asyncArray.length(resolve));
+  const TIMEOUT = 1000;
 
-  const addPromise = (a, b) => new Promise((resolve) => Homework.add(a, b, resolve));
-  const lessPromise = (a, b) => new Promise((resolve) => Homework.less(a, b, resolve));
+  const getPromise = (asyncArray, i) => {
+    return new Promise((resolve, reject) => {
+      asyncArray.get(i, resolve);
+
+      setTimeout(() => {
+        reject(new Error('Timeout'));
+      }, TIMEOUT);
+    });
+  };
+
+  const lengthPromise = (asyncArray) => {
+    return new Promise((resolve, reject) => {
+      asyncArray.length(resolve);
+
+      setTimeout(() => {
+        reject(new Error('Timeout'));
+      }, TIMEOUT);
+    });
+  };
+
+  const addPromise = (a, b) => {
+    return new Promise((resolve, reject) => {
+      Homework.add(a, b, resolve);
+
+      setTimeout(() => {
+        reject(new Error('Timeout'));
+      }, TIMEOUT);
+    });
+  };
+
+  const lessPromise = (a, b) => {
+    return new Promise((resolve, reject) => {
+      Homework.less(a, b, resolve);
+
+      setTimeout(() => {
+        reject(new Error('Timeout'));
+      }, TIMEOUT);
+    });
+  };
 
   const reducerPromise = (acc, curr, i, src, reducer) => {
-    return new Promise((resolve) => reducer(acc, curr, i, src, resolve));
+    return new Promise((resolve, reject) => {
+      reducer(acc, curr, i, src, resolve);
+
+      setTimeout(() => {
+        reject(new Error('Timeout'));
+      }, TIMEOUT);
+    });
   };
 
   return async (array, fn, initialValue, cb) => {
