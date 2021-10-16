@@ -1,13 +1,20 @@
 module.exports = function (Homework) {
   const TIMEOUT = 1000;
+  const timers = [];
+
+  const clearTimers = () => {
+    timers.forEach((timer) => clearTimeout(timer));
+  };
 
   const getPromise = (asyncArray, i) => {
     return new Promise((resolve, reject) => {
       asyncArray.get(i, resolve);
 
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         reject(new Error('Timeout'));
       }, TIMEOUT);
+
+      timers.push(timer);
     });
   };
 
@@ -15,9 +22,11 @@ module.exports = function (Homework) {
     return new Promise((resolve, reject) => {
       asyncArray.length(resolve);
 
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         reject(new Error('Timeout'));
       }, TIMEOUT);
+
+      timers.push(timer);
     });
   };
 
@@ -25,9 +34,11 @@ module.exports = function (Homework) {
     return new Promise((resolve, reject) => {
       Homework.add(a, b, resolve);
 
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         reject(new Error('Timeout'));
       }, TIMEOUT);
+
+      timers.push(timer);
     });
   };
 
@@ -35,9 +46,11 @@ module.exports = function (Homework) {
     return new Promise((resolve, reject) => {
       Homework.less(a, b, resolve);
 
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         reject(new Error('Timeout'));
       }, TIMEOUT);
+
+      timers.push(timer);
     });
   };
 
@@ -45,9 +58,11 @@ module.exports = function (Homework) {
     return new Promise((resolve, reject) => {
       reducer(acc, curr, i, src, resolve);
 
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         reject(new Error('Timeout'));
       }, TIMEOUT);
+
+      timers.push(timer);
     });
   };
 
@@ -68,5 +83,7 @@ module.exports = function (Homework) {
     } catch (e) {
       console.log(e);
     }
+
+    clearTimers();
   };
 };
