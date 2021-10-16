@@ -55,11 +55,13 @@ module.exports = function (Homework) {
     try {
       const length = await lengthPromise(array);
       let result = initialValue;
-      let currentValue;
+      let i = 0;
 
-      for (let i = 0; await lessPromise(i, length); i = await addPromise(i, 1)) {
-        currentValue = await getPromise(array, i);
-        result = await reducerPromise(result, currentValue, i, array, fn);
+      while (await lessPromise(i, length)) {
+        [result, i] = await Promise.all([
+          reducerPromise(result, await getPromise(array, i), i, array, fn),
+          addPromise(i, 1)
+        ]);
       }
 
       cb(result);
